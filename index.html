@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Ángela</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            animation: fadeIn 1s ease;
+        }
+
+        .card h1 {
+            font-size: 28px;
+            color: #e63946;
+        }
+
+        .card p {
+            font-size: 18px;
+            color: #333;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #e63946;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background-color: #d62839;
+        }
+
+        .message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            display: none;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .message h2 {
+            color: #e63946;
+            margin-bottom: 10px;
+        }
+
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #e63946;
+            opacity: 0.7;
+            transform: rotate(45deg);
+            animation: floatUp 6s infinite ease-in-out;
+        }
+
+        .heart::before, .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #e63946;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: -10px;
+            top: 0;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Para mi amada Ángela</h1>
+        <p>Quiero pedirte perdón por los malos momentos que hemos pasado. La distancia ha sido un desafío grande en nuestra relación, pero nunca ha disminuido el amor profundo que siento por ti. Eres la mujer de mi vida, mi razón de ser. Aunque no soy perfecto, mi amor por ti es puro y sincero.</p>
+        <p class="quote">"La distancia significa tan poco cuando alguien significa tanto." – Tom McNeal</p>
+        <p>¿Quieres pasar el resto de tus días a mi lado, aceptando lo bueno y lo malo que vendrá, construyendo un futuro juntos lleno de amor y esperanza?</p>
+        <div class="button-container">
+            <button onclick="handleYes()">Sí</button>
+            <button onclick="handleNo()">No</button>
+        </div>
+    </div>
+    <div class="message" id="message">
+        <h2>¡Gracias, mi amor!</h2>
+        <p>Juntos construiremos una vida llena de amor, superando cualquier obstáculo.</p>
+    </div>
+    <div class="hearts" id="hearts"></div>
+
+    <audio id="heartSound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+
+    <script>
+        let audioInitialized = false;
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = Math.random() * 100 + 'vh';
+            heart.style.animationDuration = Math.random() * 2 + 4 + 's';
+            document.getElementById('hearts').appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+
+            if (audioInitialized) {
+                const sound = document.getElementById('heartSound');
+                sound.currentTime = 0;
+                sound.play();
+            }
+        }
+
+        function handleYes() {
+            initializeAudio();
+            document.getElementById('message').style.display = 'block';
+            setInterval(createHeart, 300);
+        }
+
+        function handleNo() {
+            initializeAudio();
+            document.getElementById('message').style.display = 'block';
+            setInterval(createHeart, 300);
+        }
+
+        function initializeAudio() {
+            if (!audioInitialized) {
+                const sound = document.getElementById('heartSound');
+                sound.play().then(() => {
+                    audioInitialized = true;
+                }).catch(error => {
+                    console.log('Audio initialization failed:', error);
+                });
+            }
+        }
+
+        document.addEventListener('click', initializeAudio);
+    </script>
+</body>
+</html>
